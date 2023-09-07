@@ -221,6 +221,6 @@ void vmyprintf(Uart_type *uart_example, char *str, va_list ap) reentrant
             char_temp++;
         }
     }
-    va_end(ap);
+    // va_end(ap);
     // sendbyte_UART(uart_example, (unsigned char)'\0');
 }

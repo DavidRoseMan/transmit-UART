@@ -224,3 +224,115 @@ void vmyprintf(Uart_type *uart_example, char *str, va_list ap) reentrant
     // va_end(ap);
     // sendbyte_UART(uart_example, (unsigned char)'\0');
 }
+
+void myprintf_setdigits(Uart_type *uart_example, char *str, ...) reentrant
+{
+    char *char_temp;
+    va_list ap;
+    int i;
+    int number_get;
+    int digits;
+
+    char_temp = str;
+    va_start(ap, str);
+    while (*char_temp != '\0')
+    {
+        if (*char_temp != '%')
+        {
+            sendbyte_UART(uart_example, (unsigned char)*char_temp);
+            char_temp++;
+        }
+        else
+        {
+            char_temp++;
+            if (*char_temp == '\0')
+            {
+                sendbyte_UART(uart_example, (unsigned char)'%');
+                break;
+            }
+            else if (*char_temp != 'd')
+            {
+                sendbyte_UART(uart_example, (unsigned char)'%');
+                sendbyte_UART(uart_example, (unsigned char)*char_temp);
+                char_temp++;
+                continue;
+            }
+            number_get = va_arg(ap, int);
+            digits = va_arg(ap, int);
+            i = 1;
+            while (digits--)
+                i *= 10;
+            number_get %= i;
+            if (number_get < 0)
+            {
+                sendbyte_UART(uart_example, (unsigned char)'-');
+                number_get = -number_get;
+            }
+            i /= 10;
+            while (i)
+            {
+                sendbyte_UART(uart_example, (unsigned char)((number_get / i) + '0'));
+                number_get %= i;
+                i /= 10;
+            }
+            char_temp++;
+        }
+    }
+    va_end(ap);
+    // sendbyte_UART(uart_example, (unsigned char)'\0');
+}
+
+void vmyprintf_setdigits(Uart_type *uart_example, char *str, va_list ap) reentrant
+{
+    char *char_temp;
+    int i;
+    int number_get;
+    int digits;
+
+    char_temp = str;
+    while (*char_temp != '\0')
+    {
+        if (*char_temp != '%')
+        {
+            sendbyte_UART(uart_example, (unsigned char)*char_temp);
+            char_temp++;
+        }
+        else
+        {
+            char_temp++;
+            if (*char_temp == '\0')
+            {
+                sendbyte_UART(uart_example, (unsigned char)'%');
+                break;
+            }
+            else if (*char_temp != 'd')
+            {
+                sendbyte_UART(uart_example, (unsigned char)'%');
+                sendbyte_UART(uart_example, (unsigned char)*char_temp);
+                char_temp++;
+                continue;
+            }
+            number_get = va_arg(ap, int);
+            digits = va_arg(ap, int);
+            i = 1;
+            while (digits--)
+                i *= 10;
+            number_get %= i;
+            if (number_get < 0)
+            {
+                sendbyte_UART(uart_example, (unsigned char)'-');
+                number_get = -number_get;
+            }
+            i /= 10;
+            while (i)
+            {
+                sendbyte_UART(uart_example, (unsigned char)((number_get / i) + '0'));
+                number_get %= i;
+                i /= 10;
+            }
+            char_temp++;
+        }
+    }
+    va_end(ap);
+    // sendbyte_UART(uart_example, (unsigned char)'\0');
+}

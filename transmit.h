@@ -20,5 +20,7 @@ void UART_Process_Send_ITR(Uart_type *example, unsigned char number_uart) reentr
 //----------------------------------------------------------------------------------------
 void myprintf(Uart_type *uart_example, char *str, ...) reentrant;
 void vmyprintf(Uart_type *uart_example, char *str, va_list ap) reentrant;
+void myprintf_setdigits(Uart_type *uart_example, char *str, ...) reentrant;
+void vmyprintf_setdigits(Uart_type *uart_example, char *str, va_list ap) reentrant;
 
 #endif

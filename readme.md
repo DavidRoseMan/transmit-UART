@@ -15,4 +15,6 @@ UART_Process_Send_ITR(&uart_use,1);//在串口中断服务程序中调用，用�
 sendbyte_UART(&uart_use,0xff);//通过使用的串口发送一个值为0xff、大小为unsigned char的数据。
 myprintf(&uart_use,"hello world!%d\r\n",32767);//通过使用的串口打印字符串，字符串的转换修饰符只支持%d:int。
 vmyprintf(Uart_type *uart_example, char *str, va_list ap) reentrant;
+void myprintf_setdigits(Uart_type *uart_example, char *str, ...) reentrant;
+void vmyprintf_setdigits(Uart_type *uart_example, char *str, va_list ap) reentrant;
 ```
